@@ -1,0 +1,6 @@
+{
+  "system": "Stanton",
+  "place": "(미설정) 예: Crusader 궤도 / Seraphim Station 근처",
+  "note": "운영자가 직접 입력하는 값이에요. 게임이 위치 API를 제공하지 않아요.",
+  "updated": "2026-11-25T01:00:00+09:00"
+}

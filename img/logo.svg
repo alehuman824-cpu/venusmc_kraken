@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-320 -320 640 640" role="img" aria-label="금성상회 궤도 마크: 원형 계기 링 가운데 태극의 빨강과 파랑으로 칠한 첨성대, 그 둘레를 도는 금빛 궤도와 금성, 상하좌우에 건곤리감">
+<defs>
+<clipPath id="tower-body-b3">
+<path d="M -34 -20 C -31 -60 -19 -96 -18 -128 L 18 -128 C 19 -96 31 -60 34 -20 Z"></path>
+</clipPath>
+</defs>
+<circle cx="0" cy="0" r="292" fill="none" stroke="#D8B25A" stroke-width="1.5" opacity="0.4"></circle>
+<circle cx="0" cy="0" r="272" fill="#0E1626" stroke="#D8B25A" stroke-width="5"></circle>
+<g stroke="#D8B25A" stroke-width="4" stroke-linecap="square">
+<line x1="198" y1="-198" x2="212" y2="-212"></line>
+<line x1="-198" y1="-198" x2="-212" y2="-212"></line>
+<line x1="198" y1="198" x2="212" y2="212"></line>
+<line x1="-198" y1="198" x2="-212" y2="212"></line>
+</g>
+<g transform="rotate(-20)">
+<ellipse cx="0" cy="0" rx="205" ry="58" fill="none" stroke="#D8B25A" stroke-width="3.5" opacity="0.5"></ellipse>
+</g>
+<g transform="translate(0,122) scale(1.62)">
+<g fill="#D8B25A">
+<rect x="-46" y="-10" width="92" height="10"></rect>
+<rect x="-40" y="-19" width="80" height="8"></rect>
+<rect x="-23" y="-139" width="46" height="9"></rect>
+<rect x="-25" y="-150" width="50" height="8"></rect>
+</g>
+<g clip-path="url(#tower-body-b3)">
+<rect x="-40" y="-130" width="80" height="112" fill="#1D4E9E"></rect>
+<path d="M -50 -135 L 50 -135 L 50 -68 C 30 -68 22 -96 0 -78 C -22 -60 -30 -88 -50 -88 Z" fill="#C9353F"></path>
+<g stroke="#0E1626" stroke-width="1.4">
+<line x1="-40" y1="-36" x2="40" y2="-36"></line>
+<line x1="-40" y1="-52" x2="40" y2="-52"></line>
+<line x1="-40" y1="-106" x2="40" y2="-106"></line>
+</g>
+</g>
+<path d="M -34 -20 C -31 -60 -19 -96 -18 -128 L 18 -128 C 19 -96 31 -60 34 -20 Z" fill="none" stroke="#D8B25A" stroke-width="1.5"></path>
+<rect x="-9" y="-90" width="18" height="18" fill="#0E1626" stroke="#D8B25A" stroke-width="1.5"></rect>
+</g>
+<g transform="rotate(-20)">
+<path d="M -205 0 A 205 58 0 0 0 205 0" fill="none" stroke="#0E1626" stroke-width="13"></path>
+<path d="M -205 0 A 205 58 0 0 0 205 0" fill="none" stroke="#D8B25A" stroke-width="5"></path>
+</g>
+<circle cx="193" cy="-70" r="20" fill="#0E1626"></circle>
+<circle cx="193" cy="-70" r="15" fill="#D8B25A"></circle>
+<g transform="translate(0,-226)" fill="#D8B25A">
+<rect x="-28" y="-20.5" width="56" height="9"></rect>
+<rect x="-28" y="-4.5" width="56" height="9"></rect>
+<rect x="-28" y="11.5" width="56" height="9"></rect>
+</g>
+<g transform="translate(0,226)" fill="#D8B25A">
+<rect x="-28" y="-20.5" width="24" height="9"></rect><rect x="4" y="-20.5" width="24" height="9"></rect>
+<rect x="-28" y="-4.5" width="24" height="9"></rect><rect x="4" y="-4.5" width="24" height="9"></rect>
+<rect x="-28" y="11.5" width="24" height="9"></rect><rect x="4" y="11.5" width="24" height="9"></rect>
+</g>
+<g transform="translate(-226,0) rotate(90)" fill="#D8B25A">
+<rect x="-28" y="-20.5" width="56" height="9"></rect>
+<rect x="-28" y="-4.5" width="24" height="9"></rect><rect x="4" y="-4.5" width="24" height="9"></rect>
+<rect x="-28" y="11.5" width="56" height="9"></rect>
+</g>
+<g transform="translate(226,0) rotate(90)" fill="#D8B25A">
+<rect x="-28" y="-20.5" width="24" height="9"></rect><rect x="4" y="-20.5" width="24" height="9"></rect>
+<rect x="-28" y="-4.5" width="56" height="9"></rect>
+<rect x="-28" y="11.5" width="24" height="9"></rect><rect x="4" y="11.5" width="24" height="9"></rect>
+</g>
+</svg>

@@ -1,0 +1,8 @@
+{
+  "sample": true,
+  "updated": "2026-11-25",
+  "items": [
+    { "name": "예시 품목 A", "buy": 0, "sell": 0, "stock": "-", "note": "샘플 데이터 · 실제 품목으로 교체하세요" },
+    { "name": "예시 품목 B", "buy": 0, "sell": 0, "stock": "-", "note": "" }
+  ]
+}

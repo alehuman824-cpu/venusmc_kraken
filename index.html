@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>금성상회 청해진 · 크라켄 프라이베이티어 관제</title>
+<link rel="icon" type="image/svg+xml" href="img/logo.svg">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <img class="brand-mark" src="img/logo.svg" alt="금성상회 청해진 상징">
+    <div>
+      <h1>금성상회 청해진</h1>
+      <p>DRAKE KRAKEN PRIVATEER · 이착륙 · 상점 · 위치</p>
+    </div>
+  </div>
+  <div class="actions">
+    <button id="btnBack" class="ghost" hidden>← 뒤로</button>
+    <button id="btnShop" class="gold">상점</button>
+    <button id="btnLoc" class="gold">크라켄 프라이베이티어 위치</button>
+  </div>
+</header>
+
+<main>
+  <div class="stage" id="stage" data-state="home">
+    <img class="layer space" src="img/space.jpg" alt="">
+    <img class="layer venus" src="img/venus.webp" alt="금성">
+
+    <!-- 사선 뷰 -->
+    <div class="world" id="wPersp">
+      <img src="img/persp_cut.webp" alt="드레이크 크라켄 프라이베이티어">
+      <svg id="svgPersp" viewBox="0 0 1200 675" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+
+    <!-- 상단 뷰 -->
+    <div class="world" id="wTop">
+      <img src="img/top_cut.webp" alt="드레이크 크라켄 프라이베이티어 상단">
+      <svg id="svgTop" viewBox="0 0 2576 1449" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+
+  </div>
+
+  <!-- 상점 페이지 -->
+  <section class="shop" id="shop" hidden>
+    <h2>상점 페이지</h2>
+    <p>준비 중이에요.</p>
+  </section>
+</main>
+
+<footer>
+  <span>비공식 팬 사이트 · Star Citizen은 Cloud Imperium Games의 상표입니다.</span>
+</footer>
+
+<div class="modal" id="modal" hidden>
+  <div class="sheet" role="dialog" aria-modal="true">
+    <button class="close" id="mClose" aria-label="닫기">×</button>
+    <div id="mBody"></div>
+  </div>
+</div>
+
+<script src="config.js"></script>
+<script src="ships.js"></script>
+<script src="app.js"></script>
+</body>

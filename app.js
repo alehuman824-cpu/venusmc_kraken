@@ -22,6 +22,9 @@
   const stage = $("#stage"), shop = $("#shop"), back = $("#btnBack");
   const svgP = $("#svgPersp"), svgT = $("#svgTop");
   let state = "home";
+  let padStatus = {};      // 패드 번호 -> {handle, ship, expires_at}
+  let statusSkew = 0;      // 서버 시계 - 내 시계
+  let pollTimer = null;
 
   function poly(parent, pts, cls, title, onClick) {
     const p = document.createElementNS(NS, "polygon");
@@ -54,10 +57,36 @@
   function buildTop() {
     svgT.innerHTML = "";
     PADS.forEach(p => {
-      poly(svgT, p.pts, "hs", p.name, () => openReport(p));
+      const busy = padStatus[p.id];
+      poly(svgT, p.pts, busy ? "hs busy" : "hs", busy ? `${p.name} · 사용중 (${busy.handle})` : p.name, () => openReport(p));
       text(svgT, p.label[0], p.label[1], String(p.id), "hs-label");
+      if (busy) {
+        text(svgT, p.label[0], p.label[1] + 58, "(사용중)", "hs-busy");
+        const h = busy.handle.length > 10 ? busy.handle.slice(0, 9) + "…" : busy.handle;
+        text(svgT, p.label[0], p.label[1] + 100, h, "hs-busy sm");
+      }
     });
   }
+
+  // ---------- 패드 사용 상태 ----------
+  async function loadStatus() {
+    if (!CFG.REPORT_ENDPOINT) return;
+    try {
+      const r = await fetch(CFG.REPORT_ENDPOINT, { cache: "no-store" });
+      if (!r.ok) return;
+      const d = await r.json();
+      padStatus = d.pads || {};
+      statusSkew = (d.now || Date.now()) - Date.now();
+      if (state === "pads") buildTop();
+    } catch (_) {}
+  }
+  function startPolling() {
+    if (pollTimer || !CFG.REPORT_ENDPOINT) return;
+    loadStatus();
+    pollTimer = setInterval(loadStatus, 15000);
+  }
+  function stopPolling() { clearInterval(pollTimer); pollTimer = null; }
+  const minLeft = (b) => Math.max(1, Math.ceil((b.expires_at - (Date.now() + statusSkew)) / 60000));
 
   function go(next) {
     state = next;
@@ -66,7 +95,7 @@
     if (!inShop) { stage.dataset.state = next; }
     back.hidden = next === "home";
     buildPersp();
-    if (next === "pads") buildTop();
+    if (next === "pads") { buildTop(); startPolling(); } else stopPolling();
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -97,7 +126,8 @@
       : opt(S);
     open(`
       <h2>이착륙 신고 · ${esc(pad.name)}</h2>
-      <p class="sub">제출하면 금성상회 디스코드 채널에 올라가요.</p>
+      ${padStatus[pad.id] ? `<p class="msg err">현재 ${esc(padStatus[pad.id].handle)} (${esc(padStatus[pad.id].ship)})이 사용 중이에요. 약 ${minLeft(padStatus[pad.id])}분 뒤 자동 해제돼요.</p>` : ""}
+      <p class="sub">제출하면 금성상회 디스코드 채널에 올라가요. 착륙하면 30분 동안 사용중으로 표시돼요.</p>
       <form id="rf" autocomplete="off">
         <div class="seg">
           <input type="radio" name="kind" id="k1" value="착륙" checked><label for="k1">착륙</label>
@@ -141,8 +171,14 @@
       const r = await fetch(CFG.REPORT_ENDPOINT, {
         method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data)
       });
+      if (r.status === 409) {
+        msg.className = "msg err"; msg.textContent = await r.text();
+        btn.disabled = false; loadStatus();
+        return;
+      }
       if (!r.ok) throw new Error((await r.text()) || r.status);
       msg.className = "msg ok"; msg.textContent = "신고가 접수됐어요. 안전 비행하세요!";
+      loadStatus();
       setTimeout(close, 1400);
     } catch (err) {
       msg.className = "msg err"; msg.textContent = "전송에 실패했어요. 잠시 후 다시 시도해주세요.";

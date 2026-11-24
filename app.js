@@ -61,9 +61,7 @@
       poly(svgT, p.pts, busy ? "hs busy" : "hs", busy ? `${p.name} · 사용중 (${busy.handle})` : p.name, () => openReport(p));
       text(svgT, p.label[0], p.label[1], String(p.id), "hs-label");
       if (busy) {
-        text(svgT, p.label[0], p.label[1] + 58, "(사용중)", "hs-busy");
-        const h = busy.handle.length > 10 ? busy.handle.slice(0, 9) + "…" : busy.handle;
-        text(svgT, p.label[0], p.label[1] + 100, h, "hs-busy sm");
+        text(svgT, p.label[0], p.label[1] + 56, `사용중(${Array.from(busy.handle).slice(0, 5).join("")})`, "hs-busy");
       }
     });
   }

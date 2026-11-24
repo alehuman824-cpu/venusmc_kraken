@@ -49,8 +49,7 @@ main{padding:10px 10px 0}
 /* 핫스팟: 눈에 안 보이게, 누르기만 가능 */
 .hs{fill:transparent;stroke:none;cursor:pointer;outline:none}
 .hs.busy{fill:rgba(224,82,82,.30);stroke:#e05252;stroke-width:4}
-#svgTop .hs-busy{fill:#ff9a9a;font-size:40px;font-weight:800;pointer-events:none;paint-order:stroke;stroke:#10151f;stroke-width:8px;stroke-linejoin:round;text-anchor:middle}
-#svgTop .hs-busy.sm{font-size:30px;font-weight:600}
+#svgTop .hs-busy{fill:#ff9a9a;font-size:32px;font-weight:800;pointer-events:none;paint-order:stroke;stroke:#10151f;stroke-width:8px;stroke-linejoin:round;text-anchor:middle}
 #svgTop .hs-label{fill:#f0d58a;font-size:64px;font-weight:800;pointer-events:none;paint-order:stroke;
   stroke:#000;stroke-width:10px;stroke-linejoin:round;text-anchor:middle}
 

@@ -2,10 +2,10 @@
 // 같은 모델의 변형은 'Series' 한 줄로 묶었어요 (예: Aurora Mk I Series).
 // [함선명, 크기(S=소형 M=중형 L=대형), 소형패드(1~4), 중형패드 5, 중형패드 6]  — 1 = 착륙 가능, 0 = 불가
 window.SHIPS = [
-  ["100 Series", "S", 1, 1, 1],
-  ["M50", "S", 1, 1, 1],
-  ["Pisces Series", "S", 1, 1, 1],
-  ["Razor Series", "S", 1, 1, 1],
+  ["100 Series", "S", 1, 0, 0],
+  ["M50", "S", 1, 0, 0],
+  ["Pisces Series", "S", 1, 0, 0],
+  ["Razor Series", "S", 1, 0, 0],
   ["Talon Series", "S", 0, 1, 1],
   ["300 Series", "S", 1, 0, 0],
   ["Arrow", "S", 1, 0, 0],

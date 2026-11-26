@@ -115,13 +115,16 @@
   // ---------- 이착륙 신고 ----------
   function openReport(pad) {
     const saved = JSON.parse(localStorage.getItem("gs_reporter") || "{}");
-    const S = (window.SHIPS && window.SHIPS.small) || [], M = (window.SHIPS && window.SHIPS.medium) || [];
-    const allowed = pad.size === "M" ? [...S, ...M] : S;
-    const sel = allowed.includes(saved.ship) ? saved.ship : "";
-    const opt = (list) => list.map(s => `<option value="${esc(s)}"${s === sel ? " selected" : ""}>${esc(s)}</option>`).join("");
-    const shipOpts = pad.size === "M"
-      ? `<optgroup label="소형함">${opt(S)}</optgroup><optgroup label="중형함">${opt(M)}</optgroup>`
-      : opt(S);
+    // ships.js: 이 패드에 착륙 가능한 함선만 크기별로 나눠서 보여줘요.
+    const allowed = (window.shipsForPad ? window.shipsForPad(pad.id) : []);
+    const names = allowed.map(s => s[0]);
+    const sel = names.includes(saved.ship) ? saved.ship : "";
+    const opt = (list) => list.map(s => `<option value="${esc(s[0])}"${s[0] === sel ? " selected" : ""}>${esc(s[0])}</option>`).join("");
+    const groups = [["S", "소형함"], ["M", "중형함"], ["L", "대형함"]]
+      .map(([k, label]) => [label, allowed.filter(s => s[1] === k)])
+      .filter(([, list]) => list.length);
+    const shipOpts = groups.map(([label, list]) => `<optgroup label="${label}">${opt(list)}</optgroup>`).join("");
+    const kinds = groups.map(([label]) => label).join("·");
     open(`
       <h2>이착륙 신고 · ${esc(pad.name)}</h2>
       ${padStatus[pad.id] ? `<p class="msg err">현재 ${esc(padStatus[pad.id].handle)} (${esc(padStatus[pad.id].ship)})이 사용 중이에요. 약 ${minLeft(padStatus[pad.id])}분 뒤 자동 해제돼요.</p>` : ""}
@@ -133,7 +136,7 @@
         </div>
         <label for="nick">닉네임 (인게임 핸들)</label>
         <input id="nick" name="nick" maxlength="32" required value="${esc(saved.nick || "")}">
-        <label for="ship">함선 (${pad.size === "M" ? "소형·중형함" : "소형함"})</label>
+        <label for="ship">함선 (${kinds})</label>
         <select id="ship" name="ship" required>
           <option value="" disabled${sel ? "" : " selected"}>함선을 선택하세요</option>
           ${shipOpts}

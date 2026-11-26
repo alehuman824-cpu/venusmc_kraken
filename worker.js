@@ -19,8 +19,9 @@ const PADS = {
   1: "소형 패드 1", 2: "소형 패드 2", 3: "소형 패드 3", 4: "소형 패드 4",
   5: "중형 패드 5", 6: "중형 패드 6",
 };
-// 사이트 ships.js와 같은 목록이에요. 함선을 바꾸면 여기도 같이 바꿔요.
-const SHIPS = {"small":["100i","125a","135c","300i","315p","325a","350r","85X","Arrow","Aurora Mk I CL","Aurora Mk I ES","Aurora Mk I LN","Aurora Mk I LX","Aurora Mk I MR","Aurora Mk I SE","Avenger Stalker","Avenger Titan","Avenger Titan Renegade","Avenger Warlock","Blade","Buccaneer","C8 Pisces","C8R Pisces","C8X Pisces Expedition","Defender","Dragonfly Black","Dragonfly Yellowjacket","Eclipse","F7A Hornet Mk I","F7C Hornet Mk I","F7C Hornet Wildfire Mk I","F7C-M Super Hornet Heartseeker Mk I","F7C-M Super Hornet Mk I","F7C-R Hornet Tracker Mk I","F7C-S Hornet Ghost Mk I","Gladiator","Gladius","Gladius Pirate Edition","Gladius Valiant","Hawk","Herald","Hull A","Hurricane","M50","Mantis","MPUV Cargo","MPUV Personnel","MPUV Tractor","Mustang Alpha","Mustang Alpha Vindicator","Mustang Beta","Mustang Delta","Mustang Gamma","Mustang Omega","Nomad","Nox","Nox Kue","P-52 Merlin","P-72 Archimedes","P-72 Archimedes Emerald","Prospector","Razor","Razor EX","Razor LX","Sabre","Sabre Comet","Sabre Firebird","Sabre Peregrine","Sabre Raven","Sabre Raven EX","San'tok.yāi","Scorpius","Scorpius Antares","Talon","Talon Shrike","Terrapin","Terrapin Medic","Vulture","X1","X1 Force","X1 Velocity"],"medium":["Ares Inferno","Ares Ion","Cutlass Black","Cutlass Blue","Cutlass Red","Cutlass Steel","Freelancer","Freelancer DUR","Freelancer MAX","Freelancer MIS","Glaive","Khartu-al","MOLE","Mole Carbon Edition","Mole Talus Edition","Prowler","Prowler Utility","RAFT","Reliant Kore","Reliant Mako","Reliant Sen","Reliant Tana","Scythe","SRV","Vanguard Harbinger","Vanguard Hoplite","Vanguard Sentinel","Vanguard Warden"]};
+// 사이트 ships.js와 같은 목록이에요 (스프레드시트 '리스트 포함 O'). 함선을 바꾸면 여기도 같이 바꿔요.
+// [함선명, 크기, 소형패드(1~4), 중형패드 5, 중형패드 6] — 1 = 가능
+const SHIPS = [["100 Series","S",1,1,1],["M50","S",1,1,1],["Pisces Series","S",1,1,1],["Razor Series","S",1,1,1],["Talon Series","S",0,1,1],["300 Series","S",1,1,1],["Arrow","S",1,1,1],["Aurora Mk I Series","S",1,1,1],["Aurora Mk II","S",1,1,1],["Avenger Series","S",1,1,1],["Basher","S",1,1,1],["Blade","S",1,1,1],["Buccaneer","S",1,1,1],["Clipper","S",0,1,1],["Cutter Series","S",1,1,1],["Defender","S",0,1,1],["Eclipse","S",0,1,1],["F7C Hornet Mk II Series","S",1,1,1],["F7C-M Super Hornet Mk I Series","S",1,1,1],["F8 Lightning Series","S",0,1,1],["Fortune","S",1,1,1],["Gladiator","S",1,1,1],["Gladius Series","S",1,1,1],["Golem Series","S",1,1,1],["Guardian Series","S",0,1,1],["Hawk","S",1,1,1],["Herald","S",1,1,1],["Hull A","S",1,1,1],["Hurricane","S",1,1,1],["Intrepid","S",0,1,1],["M80","S",0,1,1],["Mantis","S",0,1,1],["Meteor","S",0,1,1],["Mustang Series","S",1,1,1],["Nomad","S",0,1,1],["Prospector","S",1,1,1],["S-65 Stingray","S",1,1,1],["Sabre Series","S",0,1,1],["Salvation","S",1,1,1],["San'tok.yāi","S",1,1,1],["Scorpius Series","S",1,1,1],["Starlite","S",0,1,1],["Terrapin Series","S",1,1,1],["Vulture","S",0,1,1],["Wolf Series","S",1,1,1],["Syulen","S",1,1,1],["F7C-M Hornet Mk II Series","M",1,1,1],["Ares Series","M",0,1,1],["Cutlass Series","M",0,1,1],["Freelancer Series","M",0,1,1],["Glaive","M",0,1,1],["Khartu-al","M",1,1,1],["MOLE Series","M",0,1,1],["MOTH","M",0,1,1],["Prowler Series","M",0,1,1],["RAFT","M",0,1,1],["Reliant Series","M",1,1,1],["Scythe","M",0,1,1],["Shiv","M",0,1,0],["Spirit Series","M",0,1,0],["SRV","M",0,1,1],["Stinger","M",0,1,1],["Vanguard Series","M",0,1,1],["Constellation Mk IV Series","L",0,0,1]];
 
 const EXPIRE_MS = 30 * 60 * 1000; // 착륙 후 자동 해제까지 30분
 
@@ -34,7 +35,10 @@ const initDb = (db) => (ready ??= (async () => {
 })().catch((e) => { ready = undefined; throw e; }));
 
 const clean = (v, n) => String(v ?? "").replace(/[\r\n\t]+/g, " ").trim().slice(0, n);
-const shipPool = (pad) => (pad >= 5 ? [...SHIPS.small, ...SHIPS.medium] : SHIPS.small);
+const shipPool = (pad) => {
+  const col = pad <= 4 ? 2 : pad === 5 ? 3 : 4; // [이름, 크기, 소형패드, 중형5, 중형6]
+  return SHIPS.filter((s) => s[col] === 1).map((s) => s[0]);
+};
 
 // ---------- 신고 처리 (사이트와 디스코드 명령이 같이 써요) ----------
 async function report(env, { pad, kind, nick, ship, memo, discordId = null, via }) {

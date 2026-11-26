@@ -1,27 +1,74 @@
-// 이착륙 신고용 함선 목록 (RSI 공식 Ship Matrix 기준, 비행 가능(flight-ready)한 함선만)
-// small = 소형(Small), medium = 중형(Medium). 지상 차량(ROC, Cyclone 등)은 제외했어요.
-window.SHIPS = {
-  small: [
-    "100i","125a","135c","300i","315p","325a","350r","85X",
-    "Arrow","Aurora Mk I CL","Aurora Mk I ES","Aurora Mk I LN","Aurora Mk I LX","Aurora Mk I MR","Aurora Mk I SE",
-    "Avenger Stalker","Avenger Titan","Avenger Titan Renegade","Avenger Warlock",
-    "Blade","Buccaneer","C8 Pisces","C8R Pisces","C8X Pisces Expedition","Defender",
-    "Dragonfly Black","Dragonfly Yellowjacket","Eclipse",
-    "F7A Hornet Mk I","F7C Hornet Mk I","F7C Hornet Wildfire Mk I","F7C-M Super Hornet Heartseeker Mk I","F7C-M Super Hornet Mk I","F7C-R Hornet Tracker Mk I","F7C-S Hornet Ghost Mk I",
-    "Gladiator","Gladius","Gladius Pirate Edition","Gladius Valiant","Hawk","Herald","Hull A","Hurricane",
-    "M50","Mantis","MPUV Cargo","MPUV Personnel","MPUV Tractor",
-    "Mustang Alpha","Mustang Alpha Vindicator","Mustang Beta","Mustang Delta","Mustang Gamma","Mustang Omega",
-    "Nomad","Nox","Nox Kue","P-52 Merlin","P-72 Archimedes","P-72 Archimedes Emerald","Prospector",
-    "Razor","Razor EX","Razor LX",
-    "Sabre","Sabre Comet","Sabre Firebird","Sabre Peregrine","Sabre Raven","Sabre Raven EX",
-    "San'tok.yāi","Scorpius","Scorpius Antares","Talon","Talon Shrike","Terrapin","Terrapin Medic","Vulture",
-    "X1","X1 Force","X1 Velocity"
-  ],
-  medium: [
-    "Ares Inferno","Ares Ion","Cutlass Black","Cutlass Blue","Cutlass Red","Cutlass Steel",
-    "Freelancer","Freelancer DUR","Freelancer MAX","Freelancer MIS","Glaive","Khartu-al","MOLE",
-    "Mole Carbon Edition","Mole Talus Edition","Prowler","Prowler Utility","RAFT",
-    "Reliant Kore","Reliant Mako","Reliant Sen","Reliant Tana","Scythe","SRV",
-    "Vanguard Harbinger","Vanguard Hoplite","Vanguard Sentinel","Vanguard Warden"
-  ]
+// 이착륙 신고용 함선 목록 — '이착륙 함선 목록' 스프레드시트에서 '리스트 포함 = O'인 함선만 옮겨 왔어요.
+// 같은 모델의 변형은 'Series' 한 줄로 묶었어요 (예: Aurora Mk I Series).
+// [함선명, 크기(S=소형 M=중형 L=대형), 소형패드(1~4), 중형패드 5, 중형패드 6]  — 1 = 착륙 가능, 0 = 불가
+window.SHIPS = [
+  ["100 Series", "S", 1, 1, 1],
+  ["M50", "S", 1, 1, 1],
+  ["Pisces Series", "S", 1, 1, 1],
+  ["Razor Series", "S", 1, 1, 1],
+  ["Talon Series", "S", 0, 1, 1],
+  ["300 Series", "S", 1, 1, 1],
+  ["Arrow", "S", 1, 1, 1],
+  ["Aurora Mk I Series", "S", 1, 1, 1],
+  ["Aurora Mk II", "S", 1, 1, 1],
+  ["Avenger Series", "S", 1, 1, 1],
+  ["Basher", "S", 1, 1, 1],
+  ["Blade", "S", 1, 1, 1],
+  ["Buccaneer", "S", 1, 1, 1],
+  ["Clipper", "S", 0, 1, 1],
+  ["Cutter Series", "S", 1, 1, 1],
+  ["Defender", "S", 0, 1, 1],
+  ["Eclipse", "S", 0, 1, 1],
+  ["F7C Hornet Mk II Series", "S", 1, 1, 1],
+  ["F7C-M Super Hornet Mk I Series", "S", 1, 1, 1],
+  ["F8 Lightning Series", "S", 0, 1, 1],
+  ["Fortune", "S", 1, 1, 1],
+  ["Gladiator", "S", 1, 1, 1],
+  ["Gladius Series", "S", 1, 1, 1],
+  ["Golem Series", "S", 1, 1, 1],
+  ["Guardian Series", "S", 0, 1, 1],
+  ["Hawk", "S", 1, 1, 1],
+  ["Herald", "S", 1, 1, 1],
+  ["Hull A", "S", 1, 1, 1],
+  ["Hurricane", "S", 1, 1, 1],
+  ["Intrepid", "S", 0, 1, 1],
+  ["M80", "S", 0, 1, 1],
+  ["Mantis", "S", 0, 1, 1],
+  ["Meteor", "S", 0, 1, 1],
+  ["Mustang Series", "S", 1, 1, 1],
+  ["Nomad", "S", 0, 1, 1],
+  ["Prospector", "S", 1, 1, 1],
+  ["S-65 Stingray", "S", 1, 1, 1],
+  ["Sabre Series", "S", 0, 1, 1],
+  ["Salvation", "S", 1, 1, 1],
+  ["San'tok.yāi", "S", 1, 1, 1],
+  ["Scorpius Series", "S", 1, 1, 1],
+  ["Starlite", "S", 0, 1, 1],
+  ["Terrapin Series", "S", 1, 1, 1],
+  ["Vulture", "S", 0, 1, 1],
+  ["Wolf Series", "S", 1, 1, 1],
+  ["Syulen", "S", 1, 1, 1],
+  ["F7C-M Hornet Mk II Series", "M", 1, 1, 1],
+  ["Ares Series", "M", 0, 1, 1],
+  ["Cutlass Series", "M", 0, 1, 1],
+  ["Freelancer Series", "M", 0, 1, 1],
+  ["Glaive", "M", 0, 1, 1],
+  ["Khartu-al", "M", 1, 1, 1],
+  ["MOLE Series", "M", 0, 1, 1],
+  ["MOTH", "M", 0, 1, 1],
+  ["Prowler Series", "M", 0, 1, 1],
+  ["RAFT", "M", 0, 1, 1],
+  ["Reliant Series", "M", 1, 1, 1],
+  ["Scythe", "M", 0, 1, 1],
+  ["Shiv", "M", 0, 1, 0],
+  ["Spirit Series", "M", 0, 1, 0],
+  ["SRV", "M", 0, 1, 1],
+  ["Stinger", "M", 0, 1, 1],
+  ["Vanguard Series", "M", 0, 1, 1],
+  ["Constellation Mk IV Series", "L", 0, 0, 1]
+];
+// 패드 번호(1~6)에서 쓸 수 있는 함선만 돌려줘요.
+window.shipsForPad = (padId) => {
+  const col = padId <= 4 ? 2 : padId === 5 ? 3 : 4;
+  return window.SHIPS.filter(s => s[col] === 1);
 };

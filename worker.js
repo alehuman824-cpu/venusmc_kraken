@@ -230,7 +230,7 @@ function padsFor(m) {
   const size = m.metrics?.size;
   if (size === "vehicle") return "지상 차량이라 패드 신고 대상이 아니에요";
   if (size === "large" || size === "capital") return "수용 불가 (대형 이상)";
-  return "청해진 신고 목록에 없는 함선이에요";
+  return "청해진 패드에 착륙이 불가능한 함선이에요";
 }
 
 async function shipInfo(value) {

@@ -48,10 +48,14 @@ main{padding:10px 10px 0}
 
 /* 핫스팟: 눈에 안 보이게, 누르기만 가능 */
 .hs{fill:transparent;stroke:none;cursor:pointer;outline:none}
-.hs.busy{fill:rgba(224,82,82,.30);stroke:#e05252;stroke-width:4}
+.hs.busy{fill:rgba(224,82,82,.30);stroke:#e05252;stroke-width:4;stroke-linejoin:round}
 #svgTop .hs-busy{fill:#ff9a9a;font-size:32px;font-weight:800;pointer-events:none;paint-order:stroke;stroke:#10151f;stroke-width:8px;stroke-linejoin:round;text-anchor:middle}
 #svgTop .hs-label{fill:#f0d58a;font-size:64px;font-weight:800;pointer-events:none;paint-order:stroke;
   stroke:#000;stroke-width:10px;stroke-linejoin:round;text-anchor:middle}
+
+/* 소형 패드는 작아서 글자도 작게 */
+#svgTop .hs-label.s{font-size:44px;stroke-width:8px}
+#svgTop .hs-busy.s{font-size:22px;stroke-width:5px}
 
 /* 상점 */
 .shop{max-width:1500px;margin:0 auto;aspect-ratio:2576/1449;display:grid;place-content:center;

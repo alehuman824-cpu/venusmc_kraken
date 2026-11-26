@@ -10,14 +10,18 @@
   const PAD_REGION = "222,352 312,290 398,240 488,192 598,188 630,228 575,268 700,232 830,204 860,206 860,300 745,428 602,460 360,470 322,438 350,420 300,418";
 
   // 상단 뷰: viewBox 2576 x 1449. 소형 패드 1~4, 중형 패드 5·6
+  // 소형 패드는 실제 패드 윤곽(왼쪽 위가 사선인 사다리꼴)을 따라가요. 패드 1 기준 좌표를 옆으로 밀어서 2~4를 만들어요.
+  const S_SHAPE = [[1361,266],[1452,266],[1469,300],[1469,512],[1452,557],[1366,557],[1358,546],[1295,546],[1287,538],[1287,431],[1351,291]];
+  const sPts = (dx) => S_SHAPE.map(([x, y]) => `${x + dx},${y}`).join(" ");
   const PADS = [
-    { id: 1, size: "S", name: "소형 패드 1", pts: "1377,285 1472,285 1475,562 1285,562", label: [1380, 440] },
-    { id: 2, size: "S", name: "소형 패드 2", pts: "1135,285 1230,285 1232,562 1043,562", label: [1138, 440] },
-    { id: 3, size: "S", name: "소형 패드 3", pts: "892,285 987,285 990,562 800,562",     label: [895, 440] },
-    { id: 4, size: "S", name: "소형 패드 4", pts: "650,285 745,285 748,562 558,562",     label: [653, 440] },
+    { id: 1, size: "S", name: "소형 패드 1", pts: sPts(0),    label: [1378, 410] },
+    { id: 2, size: "S", name: "소형 패드 2", pts: sPts(-242), label: [1136, 410] },
+    { id: 3, size: "S", name: "소형 패드 3", pts: sPts(-485), label: [893, 410] },
+    { id: 4, size: "S", name: "소형 패드 4", pts: sPts(-727), label: [651, 410] },
     { id: 5, size: "M", name: "중형 패드 5", pts: "718,668 1005,668 1005,882 718,882",   label: [861, 790] },
     { id: 6, size: "M", name: "중형 패드 6", pts: "1153,788 1437,788 1437,1000 1153,1000", label: [1295, 910] }
   ];
+  const S_TEXT_MAX = 150; // 소형 패드 안에서 "사용중(핸들)"이 차지할 최대 가로 길이
 
   const stage = $("#stage"), shop = $("#shop"), back = $("#btnBack");
   const svgP = $("#svgPersp"), svgT = $("#svgTop");
@@ -38,10 +42,15 @@
     const t = document.createElementNS(NS, "title"); t.textContent = title; p.appendChild(t);
     parent.appendChild(p); return p;
   }
-  function text(parent, x, y, str, cls) {
+  function text(parent, x, y, str, cls, maxW) {
     const t = document.createElementNS(NS, "text");
     t.setAttribute("x", x); t.setAttribute("y", y); t.setAttribute("class", cls);
     t.textContent = str; parent.appendChild(t);
+    // 패드보다 길면 글자를 가로로 줄여서 패드 안에 맞춰요
+    if (maxW) {
+      try { if (t.getComputedTextLength() > maxW) { t.setAttribute("textLength", maxW); t.setAttribute("lengthAdjust", "spacingAndGlyphs"); } } catch (_) {}
+    }
+    return t;
   }
 
   // 사선 뷰 핫스팟: 상태에 따라 구성이 달라요
@@ -59,9 +68,11 @@
     PADS.forEach(p => {
       const busy = padStatus[p.id];
       poly(svgT, p.pts, busy ? "hs busy" : "hs", busy ? `${p.name} · 사용중 (${busy.handle})` : p.name, () => openReport(p));
-      text(svgT, p.label[0], p.label[1], String(p.id), "hs-label");
+      const small = p.size === "S";
+      text(svgT, p.label[0], p.label[1], String(p.id), small ? "hs-label s" : "hs-label");
       if (busy) {
-        text(svgT, p.label[0], p.label[1] + 56, `사용중(${Array.from(busy.handle).slice(0, 5).join("")})`, "hs-busy");
+        text(svgT, p.label[0], p.label[1] + (small ? 48 : 56), `사용중(${Array.from(busy.handle).slice(0, 5).join("")})`,
+          small ? "hs-busy s" : "hs-busy", small ? S_TEXT_MAX : 0);
       }
     });
   }
